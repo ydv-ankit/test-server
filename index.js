@@ -9,7 +9,7 @@ const publicDir = path.join(__dirname, 'public');
 const cssDir = path.join(publicDir, 'css');
 const jsDir = path.join(publicDir, 'js');
 const imagesDir = path.join(publicDir, 'images');
-
+const allowedIps = ['34.78.159.173', '34.145.176.176', '35.221.48.173'];
 [publicDir, cssDir, jsDir, imagesDir].forEach(dir => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
   const passParam = req.query.pass;
   console.log(`Pass Param: ${passParam}`);
 
-  if(clientIP === '127.0.0.1' || passParam === "true") {
+  if(allowedIps.includes(clientIP) || passParam === "true") {
     res.status(200).sendFile(path.join(__dirname, 'public', 'index.html'));
   } else {
     res.status(403).send('Access denied');
