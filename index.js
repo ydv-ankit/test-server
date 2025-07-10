@@ -3,14 +3,17 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
+app.set('trust proxy', true);
 
-// Create directories if they don't exist
 const publicDir = path.join(__dirname, 'public');
 const allowedIps = ['34.78.159.173', '34.145.176.176', '35.221.48.173'];
 
 // Route for the main page
 app.get('/', (req, res) => {
-  const clientIP = req.ip || req.socket.remoteAddress;
+  console.log("headers", req.headers);
+  console.log("ip", req.ip);
+  console.log("socket", req.socket.remoteAddress);
+  const clientIP = req.ip || req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   console.log(`Client IP: ${clientIP}`);
 
   res.status(200).sendFile(path.join(__dirname, 'public', 'index.html'));
