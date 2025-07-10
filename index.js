@@ -35,14 +35,20 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from the public directory
-app.use(express.static(publicDir));
+app.use("/files",express.static(publicDir));
 
 // Route for the main page
 app.get('/', (req, res) => {
   const clientIP = req.ip || req.socket.remoteAddress;
   console.log(`Client IP: ${clientIP}`);
-  
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  const passParam = req.query.pass;
+  console.log(`Pass Param: ${passParam}`);
+
+  if(clientIP === '127.0.0.1' || passParam === "true") {
+    res.status(200).sendFile(path.join(__dirname, 'public', 'index.html'));
+  } else {
+    res.status(403).send('Access denied');
+  }
 });
 
 // API endpoint to get client info
