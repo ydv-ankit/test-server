@@ -6,7 +6,7 @@ const app = express();
 app.set('trust proxy', true);
 
 const publicDir = path.join(__dirname, 'public');
-const allowedIps = ['34.78.159.173', '34.145.176.176', '35.221.48.173'];
+const allowedIps = ['34.78.159.173', '34.145.176.176', '35.221.48.173', '157.48.206.133'];
 
 // Route for the main page
 app.get('/', (req, res) => {
