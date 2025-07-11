@@ -6,7 +6,7 @@ const app = express();
 app.set("trust proxy", true);
 
 const publicDir = path.join(__dirname, "public");
-const allowedIps = [
+let allowedIps = [
 	"34.78.159.173",
 	"34.145.176.176",
 	"35.221.48.173",
