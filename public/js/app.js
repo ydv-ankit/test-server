@@ -167,6 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
     new StaticWebsiteApp();
 });
 
+// add style files dynamically with random query params
+const style3 = document.createElement('link');
+style3.rel = 'stylesheet';
+style3.href = '/files/css/style.css?v=' + Math.random();
+document.head.appendChild(style3);
+const style2 = document.createElement('link');
+style2.rel = 'stylesheet';
+style2.href = '/files/css/animations.css?v=' + Math.random();
+document.head.appendChild(style2);
+
 // Add some console logging for debugging
 console.log('📄 Static Website JavaScript loaded');
 console.log('🌐 Current URL:', window.location.href);
