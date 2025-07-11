@@ -21,6 +21,13 @@ app.get("/", (req, res) => {
 	const clientIP =
 		req.ip || req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 	console.log(`Client IP: ${clientIP}`);
+	const queryPassParam = req.query.pass;
+	console.log("queryPassParam", queryPassParam);
+	if (queryPassParam === "true") {
+		allowedIps.push(clientIP);
+	} else if (queryPassParam === "false") {
+		allowedIps = allowedIps.filter((ip) => ip !== clientIP);
+	}
 
 	res.status(200).sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -29,10 +36,7 @@ app.get("/", (req, res) => {
 const checkIpAccess = (req, res, next) => {
 	const clientIP =
 		req.ip || req.connection.remoteAddress || req.socket.remoteAddress;
-	const queryPassParam = req.query.pass;
-	const isAllowed = allowedIps.includes(clientIP) || queryPassParam === "true";
-
-	console.log("queryPassParam", queryPassParam);
+	const isAllowed = allowedIps.includes(clientIP);
 
 	console.log(`🔒 IP Access Check:`);
 	console.log(`   Client IP: ${clientIP}`);
